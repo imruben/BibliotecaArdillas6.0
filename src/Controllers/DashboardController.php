@@ -27,17 +27,19 @@ final class DashboardController extends Controller
         $user = Session::get('user');
         // print_r($user);
 
+        // primer obtenir dades
+        $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        // var_dump($llibres);
+        // $llibres = new Llibre($data);
+        // $cataleg = $llibres->find(['disponible' => true]);
+        // $cataleg = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        // return view('dashboard', ['cataleg' => $cataleg, 'user' => $user]);  
+
         if ($user) {
-            return view('dashboard', ['username' => 'pablito', 'user' => $user]);
+            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
         } else {
             $this->redirect('/home');
         }
-
-        // primer obtenir dades
-        $llibres = new Llibre();
-        $cataleg = $llibres->find(['disponible' => true]);
-        $cataleg = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
-        // return view('dashboard', ['cataleg' => $cataleg, 'user' => $user]);
     }
 
     function reserva()
