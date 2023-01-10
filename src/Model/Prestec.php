@@ -1,21 +1,26 @@
 <?php
 
-namespace App\Models;
+namespace App\Model;
 
-use App\Models\Model;
-use App\Models\Prestec;
+use App\Model\Usuari;
+use App\Model\Llibre;
 
-class Usuari extends Model
+class Prestec extends Model
 {
-    protected string $nom;
-    protected string $email;
-    protected string $password;
-
-    public function __construct()
+    protected $llibres = [];
+    protected Usuari $user;
+    public function __construct(Usuari $user, Llibre $llibres)
     {
         parent::__construct();
+
+        $this->user = $user;
+        $this->llibres[] = $llibres;
     }
-    // public function prestecs(){
-    //   return $this->hasMany(Prestec::class);
-    // }
+    public function active()
+    {
+    }
+    public function user()
+    {
+        return $this->belongsTo(Usuari::class);
+    }
 }

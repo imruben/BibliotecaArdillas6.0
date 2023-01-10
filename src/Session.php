@@ -26,6 +26,7 @@ final class Session
      *
      * @return mixed|null Returns the value on success. NULL if the key doesn't exist.
      */
+
     public static function get($key)
     {
         if (array_key_exists($key, $_SESSION)) {
@@ -40,10 +41,12 @@ final class Session
      * @param string $key
      * @param mixed  $value
      */
+
     public static function set($key, $value)
     {
         $_SESSION[$key] = $value;
     }
+
     public function unset($key)
     {
         if ($this->exists($key)) {

@@ -16,9 +16,18 @@ final class HomeController extends Controller
 
     public function index()
     {
+
+        $user = Session::get('user');
+
+        if ($user) {
+            $this->redirect('/dashboard');
+        } else {
+            return view('home');
+        }
+
         //primer obtenir dades
-        $titol = "Biblioteca de ardillas";
-        return view('home', ['titol' => $titol]);
+        // $titol = "Biblioteca de ardillas";
+        // return view('home', ['titol' => $titol]);
         //render vista home
     }
 }

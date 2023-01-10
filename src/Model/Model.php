@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Model;
 
 use App\Database\QueryBuilder;
 use App\Container;
@@ -25,11 +25,11 @@ abstract class  Model
             $this->data = $data;
         }
     }
+
     public function get(): array
     {
         return $this->data;
     }
-
 
     function save()
     {
@@ -53,6 +53,7 @@ abstract class  Model
         $items = $this->qb->select(['*'])->from($this->table)->exec()->fetch();
         return $items;
     }
+
     function find($condition)
     {
         $k = array_keys($condition);

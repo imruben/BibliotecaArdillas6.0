@@ -52,11 +52,13 @@
 
   <!-- modal para registrarse -->
   <div class="registermodal hidden">
-    <form class="formlogin animate" action="/reg/register" method='POST'>
+    <form class="formlogin animate" action="/auth/signup" method='POST'>
       <label for="email">Email</label>
       <input type="text" name="email" placeholder="youremail@gmail.com" required><br><br>
       <label for="username">Nombre de usuario</label>
       <input type="text" name="username" placeholder="pepeViyuela" required><br><br>
+      <label for="phone">Telèfon</label>
+      <input type="text" name="phone" placeholder="666555444" required><br><br>
       <label for="password">Contraseña</label>
       <input type="password" name="password" placeholder="1234" required>
       <button type="submit" class="formloginbutton">Registrarse</button>

@@ -11,7 +11,13 @@
 </head>
 
 <body>
+  <?php
+  var_dump($user);
+  print $user->username;
+  ?>
   <div class="title">
+    <h2>Bienvenido <?php print $user->username ?></h2>
+    <h2>Rol: <?php print $user->idRol ?> </h2>
     <h1>Catalogo</h1>
   </div>
   <div class="libros">

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Model;
 
 class Llibre extends Model
 {
     private string $isbn;
     private string $autor;
     private string $titol;
-    private ?string $edicio;
+    private string $edicio;
     // inserts
     public function setIsbn($isbn)
     {
