@@ -8,9 +8,14 @@ use App\Database\connection;
 use App\Database\QueryBuilder;
 use App\Session;
 
-//acces a servei de configuració
-Container::bind('config', require 'config.php');
-//acceso a la base de datos
 
-// Container::bind('database', new DB(connection::make(Container::get('config'))));
-Container::bind('query', new QueryBuilder(connection::make(Container::get('config'))));
+
+try {
+    //acces a servei de configuració
+    Container::bind('config', require 'config.php');
+
+    //acceso a la base de datos
+    Container::bind('query', new QueryBuilder(connection::make(Container::get('config'))));
+} catch (\PDOException $e) {
+    return view('Error', ['errorMsg' => $e->getMessage()]);
+}

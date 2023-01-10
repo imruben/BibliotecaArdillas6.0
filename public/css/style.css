@@ -1,12 +1,28 @@
+:root {
+  --ardilla: beige;
+  --Background: #24252a;
+  --navDashboard: rgba(0, 0, 0, 0.5);
+  --fondoLibro: #34363f;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: "Montserrat", sans-serif;
 }
-body {
-  background-color: beige;
+html {
+  height: 100%;
+  /* width: 100%; */
 }
+body {
+  height: 100%;
+  /* background-color: beige; */
+  background-color: var(--Background);
+  height: 100%;
+  color: white;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -15,15 +31,87 @@ li {
   text-decoration: none;
   list-style: none;
 }
-.logo {
-  border-radius: 100px;
-  width: 50px;
+
+/* GENERAL */
+button {
+  padding: 9px 25px;
+  background-color: var(--ardilla);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3 ease 0s;
+}
+
+li,
+a,
+button {
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  /* background-color: var(--ardilla); */
+}
+button:hover {
+  background-color: rgba(64, 184, 64, 0.966);
+}
+
+/* NAV DASHBOARD */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 5%;
+  background: var(--navDashboard);
+}
+/* #closesession {
+  color: black;
+} */
+
+.nav__links {
+  list-style: none;
+}
+.navlink[aria-current="page"] {
+  /* color: rgb(68, 45, 45); */
+  text-decoration: underline wavy white 0.15rem;
+  text-underline-offset: 0.5rem;
+}
+
+.nav__links li {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+.nav__links li a {
+  transition: all 0.3s ease 0s;
+}
+
+.nav__links li a:hover {
+  display: inline-block;
+  padding: 0px 20px;
+}
+
+/* SERGI HOME */
+
+.logoHome {
+  border-radius: 50%;
+  width: 90px;
+  margin-right: 20px;
 }
 .header {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
+  margin-bottom: 20px;
+}
+#modalError {
+  text-align: center;
+  margin-bottom: 20px;
+  color: red;
+  font-size: 22px;
+}
+
+.ardillanuts {
+  display: flex;
+  justify-content: center;
 }
 .loginmodal,
 .registermodal {
@@ -69,8 +157,8 @@ li {
 .formloginbutton {
   margin-top: 15px;
   border-radius: 15px;
-  padding: 5px;
-  background-color: beige;
+  padding: 10px;
+  background-color: var(--ardilla);
 }
 
 #loginbutton {
@@ -81,41 +169,58 @@ li {
   margin-right: 20px;
 }
 
-.buttons {
+.navhome {
   display: flex;
   justify-content: right;
 }
-button:hover,
-#registerbutton:hover {
-  background-color: #fa8072;
-}
+
 .hidden {
   display: none;
 }
 .imgArdilla1 {
-  width: 50%;
+  width: 35%;
 }
-.a {
-  display: flex;
-  justify-content: center;
+
+/* DASHBOARD CATALOGO */
+.logoNav {
+  border-radius: 50%;
+  width: 40px;
+  margin-right: 20px;
+}
+#tituloseccionDashboard {
+  text-align: center;
 }
 .libros {
+  margin: 0 50px 0 50px;
   display: flex;
 }
 .libro {
   display: flex;
   flex-direction: column;
-  background-color: #fa8072;
+  background-color: var(--fondoLibro);
+  border: 1px solid white;
   border-radius: 15px;
   width: 25%;
   justify-content: center;
   padding: 15px;
   margin: 10px;
 }
-.libro img {
-  width: 300px;
+.idisbnform {
+  display: none;
+}
+.formreserva {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.portadaLibroCatalogo {
+  align-self: center;
+  border: 1px solid black;
+  border-radius: 5%;
+  width: 150px;
 }
 .titleLibro {
+  align-self: center;
   margin-top: 5px;
   margin-bottom: 10px;
 }
@@ -125,4 +230,27 @@ button:hover,
 .papeleraImg {
   margin-top: 10px;
   width: 50px !important;
+}
+
+/* ERROR VIEW */
+#errorCaja {
+  height: 95%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#error {
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#error img {
+  height: 300px;
+  width: auto;
 }

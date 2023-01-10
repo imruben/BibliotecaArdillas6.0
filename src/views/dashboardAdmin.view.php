@@ -11,28 +11,25 @@ require 'partials/navdashboard.view.php';
   ?>
   <div class="title">
     <h2>Rol: <?php print $user->idRol ?> </h2>
-    <h1 id="tituloseccionDashboard">Catálogo</h1>
+    <h1 id="tituloseccionDashboard">Catalogo</h1>
   </div>
-
 
   <div class="libros">
     <?php foreach ($llibres as $llibre) {
       $srcImg = '..\..\public\img\bookcovers\\' . $llibre->imgPath;
 
       print '<div class="libro" id="">
-        <img class="portadaLibroCatalogo" src="' . $srcImg . '">
+        <img id="portadaLibroCatalogo" src="' . $srcImg . '">
         <h2 class="titleLibro">' . $llibre->title . '</h2>
         <p class="autorLibro"><b>Autor: </b>' . $llibre->idAuthor . '</p>
         <p class="isbnLibro"><b>ISBN: </b>' . $llibre->ISBN . '</p>
         <p class="edicionLibro"><b>Edicion: </b>' . $llibre->edition . '</p>
         <p class="descripcionLibro">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-        <form class="formreserva" action="/dashboard/prestec" method="POST">
-        <input type="hidden" name="isbn" value="' . $llibre->ISBN . '">
-        <button class="botonReservar" type="submit">Reservar</button>
-        </form>
+        <img src="..\..\public\img\papelera.png" class="papeleraImg">
+        <a href="#"><button>Reservar</button></a>
       </div>';
     } ?>
-    <!-- <a class="botonReservar" href="/dashboard/prestec"><button>Reservar</button></a> -->
+
     <!-- <div class="libro" id="">
       <img src="..\..\public\img\bookcovers\bellotaysusamigos.jpg">
       <h2 class="titleLibro">Las bellotas y el ser humano</h2>

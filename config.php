@@ -16,11 +16,11 @@ return [
 
 
 return [
-    'dbuser' => 'root',
-    'dbpassword' => '',
-    'connection' => 'mysql:host=localhost',
-    'dbname' => 'bibliotecaardillas',
-    'options' => [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]
+  'dbuser' => 'root',
+  'dbpassword' => '',
+  'connection' => 'mysql:host=localhost',
+  'dbname' => 'bibliotecaardillas',
+  'options' => [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]
 ];
 
 

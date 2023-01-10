@@ -1,40 +1,22 @@
 <?php
-// echo "{$titulo} Home page";
+require 'partials/header.view.php';
+require 'partials/navhome.view.php';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="..\..\public\css\style.css">
-  <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-</head>
 
 <body>
-  <div class="buttons">
-    <a><button id="loginbutton" class="formloginbutton">Iniciar sesión</button></a>
-    <a><button id="registerbutton" class="formloginbutton">Registrarse</button></a>
+
+  <div class="header">
+    <img src="..\..\public\img\logo.png" class="logoHome">
+    <h1>Biblioteca de ardillas</h1>
+  </div>
+  <div id="modalError">
+    <?php if (isset($loginError)) print $loginError ?>
   </div>
 
-  <div class="card-home">
-    <div class="header">
-      <img src="..\..\public\img\logo.png" class="logo">
-      <h2>Biblioteca de ardillas</h2>
-    </div>
-    <div class="a">
-      <img src="..\..\public\img\ardilla1.jpeg" class="imgArdilla1">
-    </div>
-
-    <!--<div class="nav-home">
-          <ul>
-            <li><a href ="/auth">Sign in</a></li>
-            <li><a href ="/reg">Sign up</a></li>
-          </ul>
-        </div>-->
+  <div class="ardillanuts">
+    <img src="..\..\public\img\ardilla1.jpeg" class="imgArdilla1">
   </div>
+
   <!-- modal para login -->
   <div class="loginmodal hidden">
     <form class="formlogin animate" action="/auth/signin" method='POST'>

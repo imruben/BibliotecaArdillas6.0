@@ -55,11 +55,19 @@ final class DashboardController extends Controller
 
     function prestec()
     {
-        //crear prèstec
-        $id = $this->request->getParams();
-        $llibre = (new Llibre())->find(['id' => $id])[0];
+        $isbn = $this->request->post('isbn');
+        print $isbn;
 
-        $prestec = new Prestec($this->user, $llibre);
+        $res = $this->qb->select(['*'])->from('llibres')
+            ->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
+        var_dump($res);
+
+        // $llibre = (new Llibre())->find(['id' => $id])[0];
+        //crear prèstec
+        // $id = $this->request->getParams();
+        // 
+
+        // $prestec = new Prestec($this->user, $llibre);
     }
 
     function prestecs()

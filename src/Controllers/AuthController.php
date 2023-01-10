@@ -39,14 +39,11 @@ final class AuthController extends Controller
 
     private function auth(string $email, string $passwd)
     {
-        //$password=password_hash($passwd,PASSWORD_BCRYPT,['cost'=>4]);
         $res = $this->qb->select(['*'])->from('usuaris')
             ->where(['email' => $email])->limit(1)->exec()->fetch();
-        print('datos sql<br>');
         // var_dump($res);
-        // print_r($res[0]);
 
-
+        //ha encontrado usuario con ese email en bd
         if ($res) {
             $user = $res[0];
             // die($user->password);
@@ -54,14 +51,19 @@ final class AuthController extends Controller
             //Contrasenya correcta
             if (password_verify($passwd, $user->password)) {
                 Session::set('user', $user);
-                print_r(Session::get('user'));
                 // desar servei auth
                 $this->redirect('/dashboard');
+
+                //Contrasenya incorrecta
+            } else {
+                return view('home', ['loginError' => 'Contraseña incorrecta 😢']);
             }
-            //Contrasenya incorrecta
+
+            //no hay usuario con ese email
         } else {
-            $this->session->set('error', "Sessión fallida");
-            $this->redirect('/dashboard');
+            return view('home', ['loginError' => 'Email no encontrado 😷']);
+            // $this->session->set('Error', "Sessión fallida");
+            // $this->redirect('/dashboard');
         }
     }
 
