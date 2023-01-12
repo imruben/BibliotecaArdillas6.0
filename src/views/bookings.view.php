@@ -1,6 +1,6 @@
 <?php
 require 'partials/header.view.php';
-require 'partials/navdashboard.view.php';
+require 'partials/navbookings.view.php';
 ?>
 
 
