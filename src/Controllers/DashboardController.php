@@ -28,6 +28,7 @@ final class DashboardController extends Controller
         $rolUser = $user->idRol;
 
         $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        $users = $this->qb->select(['*'])->from('usuaris')->exec()->fetch();
         //1==socio
         //2==trabajador
         //3==admin
@@ -36,7 +37,7 @@ final class DashboardController extends Controller
         }else if($rolUser==2){
             return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
         }else if($rolUser==3){
-            return view('admin', ['username' => 'pablito']);
+            return view('admin', ['username' => 'pablito', 'users' => $users]);
         }
         // print_r($user);
 
