@@ -11,8 +11,9 @@ require 'partials/navdashboard.view.php';
 
 
   <div class="libros">
-    <?php foreach ($llibres as $llibre) {
-      $srcImg = '..\..\public\img\bookcovers\\' . $llibre->imgPath;
+    <?php
+    foreach ($llibres as $llibre) {
+      $srcImg = '..\..\public\img\bookcovers\\' . $llibre['imgPath'];
 
       // print '<div class="libro" id="">
       //   <img class="portadaLibroCatalogo" src="' . $srcImg . '">
@@ -39,19 +40,19 @@ require 'partials/navdashboard.view.php';
     </div>
     <div>
       <div class="book-card__title">
-        ' . $llibre->title . '
+        ' . $llibre['title'] . '
       </div>
       <div class="book-card__author">
       Nil ojeda
       </div>
       <div class="book-card__isbn">
-      ' . $llibre->ISBN . '
+      ' . $llibre['ISBN'] . '
       </div>
       <div class="book-card__description">
       Lorem Ipsum has been the industrys standard dummy text ever since the 1500s
       </div>
       <form class="formreserva" action="/dashboard/prestec" method="POST">
-        <input type="hidden" name="isbn" value="' . $llibre->ISBN . '">
+        <input type="hidden" name="isbn" value="' . $llibre['ISBN'] . '">
         <button class="botonReservar" type="submit">Reservar</button>
         </form>
     </div>

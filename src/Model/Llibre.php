@@ -14,12 +14,11 @@ class Llibre extends Model
     public function __construct(array $data = [])
     {
         parent::__construct($data);
-        var_dump($data[0]->ISBN);
-        // $this->isbn = $data['ISBN'];
-        // $this->autor = $data['IdAuthor'];
-        // $this->titol = $data['title'];
-        // $this->edicio = $data['edition'];
-        // $this->imgPath = $data['imgPath'];
+        $this->isbn = $data['ISBN'];
+        $this->autor = $data['idAuthor'];
+        $this->titol = $data['title'];
+        $this->edicio = $data['edition'];
+        $this->imgPath = $data['imgPath'];
     }
 
 

@@ -24,12 +24,13 @@ final class DashboardController extends Controller
 
     public function index()
     {
-        $user = Session::get('user');
-        // print_r($user);
-
+        $userData = Session::get('user');
+        $user = new Usuari($userData);
+        print $user->getUsername();
+        print $user->getUsername();
         // primer obtenir dades
         $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
-        // var_dump($llibres);
+        // // var_dump($llibres);
         // $llibres = new Llibre($data);
         // $cataleg = $llibres->find(['disponible' => true]);
         // $cataleg = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
@@ -60,14 +61,23 @@ final class DashboardController extends Controller
 
     function prestec()
     {
-        $user = Session::get('user');
+        $userData = Session::get('user');
+        $user = new Usuari($userData);
+
         $isbn = $this->request->post('isbn');
+        print $isbn;
 
-
-        $dataBook = $this->qb->select(['*'])->from('llibres')
+        $bookData = $this->qb->select(['*'])->from('llibres')
             ->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
-        // var_dump($dataBook);
-        $book = new Llibre($dataBook[0]);
+
+        var_dump($bookData[0]);
+
+        $book = new Llibre($bookData[0]);
+        print $book->getIsbn();
+
+        $booking = new Prestec($user, $book);
+
+
 
 
         // $dataBooking = [];

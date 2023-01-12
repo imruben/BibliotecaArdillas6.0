@@ -49,7 +49,7 @@ final class AuthController extends Controller
             // die($user->password);
 
             //Contrasenya correcta
-            if (password_verify($passwd, $user->password)) {
+            if (password_verify($passwd, $user['password'])) {
                 Session::set('user', $user);
                 // desar servei auth
                 $this->redirect('/dashboard');

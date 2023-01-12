@@ -119,7 +119,7 @@ class QueryBuilder
 
     function fetch(): ?array
     {
-        $rows = $this->stmt->fetchAll(\PDO::FETCH_OBJ);
+        $rows = $this->stmt->fetchAll(\PDO::FETCH_ASSOC);
         if ($rows) {
             return $rows;
         }

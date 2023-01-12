@@ -2,7 +2,7 @@
     <div class="caja1">
         <div class="cosa">
             <a href="/home">
-                <img class="logoNav" src="public/img/logo.png"> </a>
+                <img class="logoNav" src="/public/img/logo.png"> </a>
         </div>
         <div class="cosa">
             <h2 class="tituloPag">BIBLIOTECA DE ARDILLAS</h2>

@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+
+RewriteEngine On
+# si es un arxiu o directori
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d 
+# no modificar
+RewriteRule  ^.*$ - [NC,L]
+# si no, reescribir, la nueva url es index.php
+RewriteRule ^.*$ index.php [NC,L]
