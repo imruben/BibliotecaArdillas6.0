@@ -262,7 +262,7 @@ header a {
 
 /* pijada libro */
 .book-card {
-  width: 100%;
+  width: 200px;
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
@@ -270,13 +270,13 @@ header a {
 }
 .book-card .book-card__cover {
   position: relative;
-  width: 100px;
+  width: 110px;
   height: 150px;
   margin: 0 auto 8px auto;
   perspective: 1000px;
 }
 .book-card .book-card__book {
-  height: 100%;
+  height: 150px;
   transform-style: preserve-3d;
   transition: all 250ms ease;
 }
@@ -293,9 +293,9 @@ header a {
 }
 .book-card .book-card__book-side {
   position: absolute;
-  top: 5px;
+  top: 3px;
   bottom: 2px;
-  right: -29px;
+  right: -31px;
   width: 40px;
   background-size: 5px;
   background-color: #e1e1e1;
@@ -324,27 +324,4 @@ header a {
 }
 .book-card:hover .book-card__book-side {
   opacity: 1;
-}
-.users{
-  font-size: 14px;
-  margin: 20px 50px 0 50px;
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-}
-.user{
-  display: flex;
-  background-color: beige;
-  border-radius: 20px;
-  padding: 20px;
-  width: auto;
-}
-.fotoUser{
-  width: 190px;
-  margin-right: 20px;
-}
-.nombreUser{
-  font-size: 1.5em;
-  margin-bottom: 8px;
 }
