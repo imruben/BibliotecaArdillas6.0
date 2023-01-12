@@ -25,27 +25,46 @@ final class DashboardController extends Controller
     public function index()
     {
         $user = Session::get('user');
+        $rolUser = $user->idRol;
+
+        $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        //1==socio
+        //2==trabajador
+        //3==admin
+        if($rolUser==1){
+            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
+        }else if($rolUser==2){
+            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
+        }else if($rolUser==3){
+            return view('admin', ['username' => 'pablito']);
+        }
         // print_r($user);
 
         // primer obtenir dades
-        $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        
         // var_dump($llibres);
         // $llibres = new Llibre($data);
         // $cataleg = $llibres->find(['disponible' => true]);
         // $cataleg = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
         // return view('dashboard', ['cataleg' => $cataleg, 'user' => $user]);  
 
-        if ($user) {
-            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
-        } else {
-            $this->redirect('/home');
-        }
+        // if ($user) {
+        //     return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
+        // } else {
+        //     $this->redirect('/home');
+        // }
     }
 
     function bookings()
     {
         return view('bookings', ['username' => 'pablito']);
     }
+
+    function admin()
+    {
+        return view('admin', ['username' => 'pablito']);
+    }
+
 
     function reserva()
     {

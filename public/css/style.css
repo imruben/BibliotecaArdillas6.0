@@ -325,3 +325,26 @@ header a {
 .book-card:hover .book-card__book-side {
   opacity: 1;
 }
+.users{
+  font-size: 14px;
+  margin: 20px 50px 0 50px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+.user{
+  display: flex;
+  background-color: beige;
+  border-radius: 20px;
+  padding: 20px;
+  width: auto;
+}
+.fotoUser{
+  width: 190px;
+  margin-right: 20px;
+}
+.nombreUser{
+  font-size: 1.5em;
+  margin-bottom: 8px;
+}
