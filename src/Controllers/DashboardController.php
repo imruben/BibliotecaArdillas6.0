@@ -24,6 +24,7 @@ final class DashboardController extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $userData = Session::get('user');
         $user = new Usuari($userData);
         print $user->getUsername();
@@ -31,22 +32,50 @@ final class DashboardController extends Controller
         // primer obtenir dades
         $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
         // // var_dump($llibres);
+=======
+        $user = Session::get('user');
+        $rolUser = $user->idRol;
+
+        $llibres = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        $users = $this->qb->select(['*'])->from('usuaris')->exec()->fetch();
+        //1==socio
+        //2==trabajador
+        //3==admin
+        if($rolUser==1){
+            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
+        }else if($rolUser==2){
+            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
+        }else if($rolUser==3){
+            return view('admin', ['username' => 'pablito', 'users' => $users]);
+        }
+        // print_r($user);
+
+        // primer obtenir dades
+        
+        // var_dump($llibres);
+>>>>>>> a0c5fa362daaa8fd7ebca83b31a54bfaa262caef
         // $llibres = new Llibre($data);
         // $cataleg = $llibres->find(['disponible' => true]);
         // $cataleg = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
         // return view('dashboard', ['cataleg' => $cataleg, 'user' => $user]);  
 
-        if ($user) {
-            return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
-        } else {
-            $this->redirect('/home');
-        }
+        // if ($user) {
+        //     return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
+        // } else {
+        //     $this->redirect('/home');
+        // }
     }
 
     function bookings()
     {
         return view('bookings', ['username' => 'pablito']);
     }
+
+    function admin()
+    {
+        return view('admin', ['username' => 'pablito']);
+    }
+
 
     function reserva()
     {
