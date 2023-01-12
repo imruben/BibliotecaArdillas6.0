@@ -42,6 +42,11 @@ final class DashboardController extends Controller
         }
     }
 
+    function bookings()
+    {
+        return view('bookings', ['username' => 'pablito']);
+    }
+
     function reserva()
     {
         $id = $this->request->getParams();
@@ -55,12 +60,26 @@ final class DashboardController extends Controller
 
     function prestec()
     {
+        $user = Session::get('user');
         $isbn = $this->request->post('isbn');
-        print $isbn;
 
-        $res = $this->qb->select(['*'])->from('llibres')
+
+        $dataBook = $this->qb->select(['*'])->from('llibres')
             ->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
-        var_dump($res);
+        // var_dump($dataBook);
+        $book = new Llibre($dataBook[0]);
+
+
+        // $dataBooking = [];
+
+
+
+
+        // $booking = new Prestec($user, $book);
+
+        // $this->qb->insert();
+
+        // print $user->idUser;
 
         // $llibre = (new Llibre())->find(['id' => $id])[0];
         //crear prèstec
@@ -69,6 +88,8 @@ final class DashboardController extends Controller
 
         // $prestec = new Prestec($this->user, $llibre);
     }
+
+
 
     function prestecs()
     {

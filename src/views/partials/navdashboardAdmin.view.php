@@ -2,7 +2,7 @@
     <div class="caja1">
         <div class="cosa">
             <a href="/home">
-                <img class="logoNav" src="public/img/logo.png"> </a>
+                <img class="logoNav" src="public/img/logo.png" alt="Viva los monos"> </a>
         </div>
         <div class="cosa">
             <h2 class="tituloPag">BIBLIOTECA DE ARDILLAS</h2>
@@ -12,8 +12,8 @@
     <div class="nav__links">
         <li><a id="catalogue__navlink" class="navlink button" href="/dashboard">
                 Cátalogo</a></li>
-        <li><a class="navlink derecha" href="/dashboard/bookings">Mis reservas</a></li>
-        <li><a class="navlink derecha" href="#">Historial</a></li>
+        <li><a class="navlink derecha" href="#">Reservas</a></li>
+        <li><a class="navlink derecha" href="#">Socios</a></li>
     </div>
     <div class="caja2">
         <div class="closesession">
@@ -21,5 +21,4 @@
             <a href="/auth/logout">Cerrar sesion</a>
         </div>
     </div>
-
 </header>

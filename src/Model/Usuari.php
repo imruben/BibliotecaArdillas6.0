@@ -33,4 +33,11 @@ class Usuari extends Model
     {
         return $this->hasMany(Prestec::class);
     }
+
+    public function getUsernameId()
+    {
+        return $this->email;
+        // $res = $this->qb->select([''])->from('llibres')
+        //     ->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
+    }
 }
