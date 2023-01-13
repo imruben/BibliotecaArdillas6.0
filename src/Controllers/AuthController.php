@@ -39,18 +39,18 @@ final class AuthController extends Controller
 
     private function auth(string $email, string $passwd)
     {
-        $res = $this->qb->select(['*'])->from('usuaris')
+        $user = $this->qb->select(['*'])->from('usuaris')
             ->where(['email' => $email])->limit(1)->exec()->fetch();
         // var_dump($res);
 
         //ha encontrado usuario con ese email en bd
-        if ($res) {
-            $user = $res[0];
+        if ($user) {
             // die($user->password);
 
             //Contrasenya correcta
-            if (password_verify($passwd, $user['password'])) {
+            if (password_verify($passwd, $user[0]['password'])) {
                 Session::set('user', $user);
+
                 // desar servei auth
                 $this->redirect('/dashboard');
 

@@ -7,17 +7,21 @@ use App\Model\Prestec;
 
 class Usuari extends Model
 {
-    protected string $nom;
+    protected string $username;
     protected string $email;
     protected string $password;
+    protected string $phone;
+    protected string $idRol;
 
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        $this->nom = $data['username'];
+        $this->username = $data['username'];
         $this->email = $data['email'];
         $this->password = $data['password'];
+        $this->phone = $data['phone'];
+        $this->idRol = $data['idRol'];
     }
 
     public function signupUser()
@@ -26,18 +30,28 @@ class Usuari extends Model
 
     public function getUsername()
     {
-        return $this->nom;
+        return $this->username;
     }
-
-    public function prestecs()
-    {
-        return $this->hasMany(Prestec::class);
-    }
-
-    public function getUsernameId()
+    public function getEmail()
     {
         return $this->email;
-        // $res = $this->qb->select([''])->from('llibres')
-        //     ->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
     }
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+    public function getidRol()
+    {
+        return $this->idRol;
+    }
+
+
+    // public function prestecs()
+    // {
+    //     return $this->hasMany(Prestec::class);
+    // }
 }
