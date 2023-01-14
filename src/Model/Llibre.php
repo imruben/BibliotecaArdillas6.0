@@ -5,46 +5,107 @@ namespace App\Model;
 class Llibre extends Model
 {
     private string $isbn;
-    private string $autor;
-    private string $titol;
-    private string $edicio;
-    private string $idAutor;
+    private string $author;
+    private string $title;
+    private int $edition;
+    private string $idAuthor;
     private string $imgPath;
+    private bool $available;
 
     public function __construct(array $data = [])
     {
         parent::__construct($data);
         $this->isbn = $data['ISBN'];
-        $this->autor = $data['idAuthor'];
-        $this->titol = $data['title'];
-        $this->edicio = $data['edition'];
+        $this->author = $data['author'];
+        $this->title = $data['title'];
+        $this->edition = $data['edition'];
         $this->imgPath = $data['imgPath'];
+        $this->available = $data['available'];
     }
 
-
-    // inserts
     public function setIsbn($isbn)
     {
         $this->isbn = $isbn;
     }
-    public function setAuthor($autor)
+    public function setAuthor($author)
     {
-        $this->autor = $autor;
+        $this->author = $author;
     }
-    public function setTitol($titol)
+    public function settitle($title)
     {
-        $this->titol = $titol;
+        $this->title = $title;
     }
-    public function setEdicio($edicio)
+    public function setEdicio($edition)
     {
-        $this->edicio = $edicio;
+        $this->edition = $edition;
     }
 
-    //select
-    public function getIsbn(): string
+    public function getISBN(): string
     {
         return $this->isbn;
     }
-    //......
+    public function getImgPath(): string
+    {
+        return $this->imgPath;
+    }
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+    public function getEdition(): string
+    {
+        return $this->edition;
+    }
 
+    public function setUnavailable()
+    {
+        $this->available = 0;
+        $this->qb->updateOneField('available', 0, 'isbn', $this->isbn);
+    }
+
+    public function renderBook(): string
+    {
+        $bookClass = $this->available ? 'available' : 'unavailable';
+
+        $srcImg = "\public\img\bookcovers\\{$this->imgPath}";
+        $html = '<div class="book-card book_' . $bookClass . '">
+        <div class="book-card__cover">
+          <div class="book-card__book">
+            <div class="book-card__book-front">
+              <img class="book-card__img" src="' . $srcImg . '" />
+            </div>
+            <div class="book-card__book-back"></div>
+            <div class="book-card__book-side"></div>
+          </div>
+        </div>
+        <div>
+          <div class="book-card__title">
+            ' . $this->title . '
+          </div>
+          <div class="book-card__author">
+          Nil ojeda
+          </div>
+          <div class="book-card__isbn">
+          ' . $this->isbn . '
+          </div>
+          <div class="book-card__description">
+          Lorem Ipsum has been the industrys standard dummy text ever since the 1500s</div>
+          ';
+
+        if ($this->available) {
+            $html .= '<br><a class="botonReservar" href="/dashboard/reserveBook/' . $this->isbn . '">Reservar</a>';
+        }
+
+        $html .= '<br></div></div>';
+        return $html;
+    }
 }
+
+// <form class="formreserva" action="/dashboard/prestec" method="POST">
+//             <input type="hidden" name="isbn" value="' . $this->isbn  . '">
+//             <button class="botonReservar" type="submit">Reservar</button>
+//             </form>

@@ -7,15 +7,21 @@ use App\Model\Prestec;
 
 class Usuari extends Model
 {
+    protected string $idUser;
     protected string $username;
     protected string $email;
     protected string $password;
-    protected string $phone;
+    protected int $phone;
     protected string $idRol;
 
     public function __construct(array $data)
     {
         parent::__construct($data);
+        if (isset($data['idUser'])) {
+            $this->idUser = $data['idUser'];
+        } else {
+            $this->idUser = '';
+        }
 
         $this->username = $data['username'];
         $this->email = $data['email'];
@@ -28,9 +34,14 @@ class Usuari extends Model
     {
     }
 
+    //getters
     public function getUsername()
     {
         return $this->username;
+    }
+    public function getUserId()
+    {
+        return $this->idUser;
     }
     public function getEmail()
     {

@@ -29,6 +29,7 @@ body {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 li {
   text-decoration: none;
@@ -36,7 +37,8 @@ li {
 }
 
 /* GENERAL */
-button {
+button,
+.botonReservar {
   padding: 9px 25px;
   background-color: var(--ardilla);
   border: none;
@@ -50,7 +52,6 @@ a,
 button {
   font-weight: 500;
   font-size: 16px;
-  text-decoration: none;
   /* background-color: var(--ardilla); */
 }
 button:hover {
@@ -226,7 +227,7 @@ header a {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(100px, 400px);
 }
 
 .idisbnform {
@@ -261,6 +262,19 @@ header a {
 }
 
 /* pijada libro */
+.botonReservar {
+  margin-left: 15%;
+  margin-bottom: 100px;
+}
+
+.book_available {
+  background-color: rgba(50, 158, 28, 0.3) !important;
+}
+
+.book_unavailable {
+  background-color: rgb(216, 18, 18, 0.3) !important;
+}
+
 .book-card {
   width: 200px;
   padding: 10px;
@@ -325,7 +339,7 @@ header a {
 .book-card:hover .book-card__book-side {
   opacity: 1;
 }
-.users{
+.users {
   font-size: 14px;
   margin: 20px 50px 0 50px;
   display: grid;
@@ -333,18 +347,63 @@ header a {
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
 }
-.user{
+.user {
   display: flex;
   background-color: beige;
   border-radius: 20px;
   padding: 20px;
   width: auto;
 }
-.fotoUser{
+.fotoUser {
   width: 190px;
   margin-right: 20px;
 }
-.nombreUser{
+.nombreUser {
   font-size: 1.5em;
   margin-bottom: 8px;
+}
+
+/* RESERVES */
+.reserves_table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 700px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+}
+.reserves_table thead tr {
+  background-color: var(--colorSecundario);
+  color: #ffffff;
+  text-align: left;
+}
+.reserves_table th,
+.reserves_table td {
+  padding: 12px 15px;
+  text-align: center;
+}
+
+.reserves_table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.reserves_table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.reserves_table tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+.reserves_table tbody tr.active-row {
+  font-weight: bold;
+  color: #009879;
+}
+.bookcover_reserves {
+  width: 50px;
+}
+.reserves_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

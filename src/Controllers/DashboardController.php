@@ -13,120 +13,84 @@ use App\Model\Usuari;
 
 final class DashboardController extends Controller
 {
-    protected Usuari $user;
+    protected Usuari $userActual;
 
     function __construct(Request $request, Session $session)
     {
         parent::__construct($request, $session);
-        // $user = new Usuari(Session::get('user'));
-        // $this->user = $user;
+
+        //Lee el user de la sesión
+        $userData = Session::get('user');
+        if (!$userData) $this->redirect('/home');
+        $this->userActual = new Usuari($userData[0]);
     }
+
 
     public function index()
     {
-        $userData = Session::get('user');
-        $user = new Usuari($userData[0]);
+        // Lee todos los libros
+        $booksData = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
+        foreach ($booksData as $b) {
+            $books[] = new Llibre($b);
+        }
 
-        $rolUser = $user->getidRol();
+        // Lee todos los usuarios
+        $usersData = $this->qb->select(['*'])->from('usuaris')->exec()->fetch();
+        foreach ($usersData as $u) {
+            $users[] = new Usuari($u);
+        };
 
-
-        $books = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
-
-        $users = $this->qb->select(['*'])->from('usuaris')->exec()->fetch();
-
-
-        //1==socio
-        //2==trabajador
-        //3==admin
-        // if ($rolUser == 1) {
-        //     return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
-        // } else if ($rolUser == 2) {
-        //     return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
-        // } else if ($rolUser == 3) {
-        //     return view('admin', ['username' => 'pablito', 'users' => $users]);
-        // }
-        // print_r($user);
-
-        // primer obtenir dades
-
-        // var_dump($llibres);
-        // $llibres = new Llibre($data);
-        // $cataleg = $llibres->find(['disponible' => true]);
-        // $cataleg = $this->qb->select(['*'])->from('llibres')->exec()->fetch();
-        // return view('dashboard', ['cataleg' => $cataleg, 'user' => $user]);  
-
-        // if ($user) {
-        //     return view('dashboard', ['username' => 'pablito', 'user' => $user, 'llibres' => $llibres]);
-        // } else {
-        //     $this->redirect('/home');
-        // }
+        //Redigire a diferente view dependiendo el rol del user
+        $rolUser = $this->userActual->getidRol();
+        // 1==socio
+        if ($rolUser == 1) {
+            return view('dashboard', ['user' => $this->userActual, 'books' => $books]);
+            // 2==trabajador
+        } else if ($rolUser == 2) {
+            return view('dashboard', ['user' => $this->userActual, 'users' => $users, 'books' => $books]);
+            // 3==admin
+        } else if ($rolUser == 3) {
+            return view('admin', ['users' => $users, 'users' => $users, 'books' => $books]);
+        }
     }
 
-    function bookings()
+    function reserveBook()
     {
-        return view('bookings', ['username' => 'pablito']);
+        $actualDate = new \DateTime();
+        $isbn = $this->request->getParams();
+
+        $bookData = $this->qb->select(['*'])->from('llibres')->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
+
+        $bookReserved = new Llibre($bookData[0]);
+        $bookReserved->setUnavailable();
+
+
+        $reserve = new Prestec($this->userActual, $bookReserved, $actualDate);
+        $reserve->saveReserve();
+        $this->redirect('/dashboard');
+    }
+
+    function reserves()
+    {
+        $actualDate = new \DateTime();
+        $userid = $this->userActual->getUserId();
+        $reservesData = $this->qb->select(['*'])->from('prestecs')->where(['idUser' => $userid])->exec()->fetch();
+        if (!$reservesData) return view('reserves', ['user' => $this->userActual, 'reserves' => []]);
+
+
+        foreach ($reservesData as $r) {
+            $bookReserved = new LLibre($this->qb->select(['*'])->from('llibres')->where(['isbn' => $r['ISBN']])->limit(1)->exec()->fetch()[0]);
+
+            $reserves[] = new Prestec($this->userActual, $bookReserved, $actualDate);
+        }
+
+        return view('reserves', ['user' => $this->userActual, 'reserves' => $reserves]);
     }
 
     function admin()
     {
         return view('admin', ['username' => 'pablito']);
     }
-
-
-    function reserva()
-    {
-        $id = $this->request->getParams();
-        $llibre = (new Llibre())->find(['id' => $id])[0];
-
-        return view('reserva', [
-            'llibre' => $llibre,
-            'user' => $this->user
-        ]);
-    }
-
-    function prestec()
-    {
-        $userData = Session::get('user');
-
-
-        $user = new Usuari($userData);
-
-        $isbn = $this->request->post('isbn');
-        print $isbn;
-
-        $bookData = $this->qb->select(['*'])->from('llibres')
-            ->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
-
-        var_dump($bookData[0]);
-
-        $book = new Llibre($bookData[0]);
-        print $book->getIsbn();
-
-        $booking = new Prestec($user, $book);
-
-
-
-
-        // $dataBooking = [];
-
-
-
-
-        // $booking = new Prestec($user, $book);
-
-        // $this->qb->insert();
-
-        // print $user->idUser;
-
-        // $llibre = (new Llibre())->find(['id' => $id])[0];
-        //crear prèstec
-        // $id = $this->request->getParams();
-        // 
-
-        // $prestec = new Prestec($this->user, $llibre);
-    }
-
-
 
     function prestecs()
     {

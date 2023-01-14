@@ -5,7 +5,7 @@ namespace App\Model;
 use App\Database\QueryBuilder;
 use App\Container;
 
-abstract class  Model
+abstract class Model
 {
     protected QueryBuilder $qb;
     protected string $table;

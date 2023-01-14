@@ -114,6 +114,7 @@ class QueryBuilder
         $sql = join($this->query);
         $this->stmt = $this->query($sql);
         $this->stmt->execute();
+        $this->query = []; // vaciar la query para poder hacer más de una seguida
         return $this;
     }
 
@@ -214,6 +215,13 @@ class QueryBuilder
             return false;
         }
     }
+
+    function updateOneField($field, $value, $fieldWhere, $valueWhere)
+    {
+        $sql = "UPDATE {$this->table} SET {$field}={$value} WHERE {$fieldWhere}={$valueWhere}";
+        $this->query($sql)->execute();
+    }
+
 
     function remove($tbl, $id)
     {
