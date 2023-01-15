@@ -1,20 +1,9 @@
 <?php
 require 'partials/header.view.php';
-//require 'partials/navhome.view.php';
+require 'partials/navdashboardAdmin.view.php';
 ?>
 
 <body>
-    <header>
-        <div class="nv">
-
-        </div>
-        <div class="caja2"> 
-            <div class="closesession">
-                <i class="logouticon material-icons">logout</i>
-                <a href="/auth/logout">Cerrar sesion</a>
-            </div>
-        </div>
-    </header>
     <div class="users">
         <div class="user">
             <img src="/public/img/ardillaSurf.png" class="fotoUser">
@@ -32,4 +21,5 @@ require 'partials/header.view.php';
         </div>
     </div>
 </body>
+
 </html>

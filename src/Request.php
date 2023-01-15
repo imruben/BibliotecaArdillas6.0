@@ -86,4 +86,15 @@ final class Request
             return filter_input(INPUT_POST, $field, FILTER_DEFAULT);
         } else return "";
     }
+
+    public function postAll(array $fields)
+    {
+        $values = [];
+        foreach ($fields as $f) {
+            if ($this->method == 'POST') {
+                $values[$f] = filter_input(INPUT_POST, $f, FILTER_DEFAULT);
+            } else return "";
+        }
+        return $values;
+    }
 }

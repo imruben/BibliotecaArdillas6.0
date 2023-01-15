@@ -50,7 +50,7 @@ final class DashboardController extends Controller
             return view('dashboard', ['user' => $this->userActual, 'users' => $users, 'books' => $books]);
             // 3==admin
         } else if ($rolUser == 3) {
-            return view('admin', ['users' => $users, 'users' => $users, 'books' => $books]);
+            return view('dashboardAdmin', ['user' => $this->userActual, 'books' => $books]);
         }
     }
 
@@ -87,10 +87,56 @@ final class DashboardController extends Controller
         return view('reserves', ['user' => $this->userActual, 'reserves' => $reserves]);
     }
 
-    function admin()
+    function reservesAdmin()
+    {
+    }
+
+    function usersAdmin()
     {
         return view('admin', ['username' => 'pablito']);
     }
+
+    function addBook()
+    {
+        $posts = ['ISBN', 'title', 'edition', 'author', 'imgPath', 'available'];
+
+        if ($this->request->postAll($posts)) {
+            $data = $this->request->postAll($posts);
+            $book = new Llibre($data);
+            $res = $book->persist();
+            if ($res) $this->redirect('/dashboard');
+            else {
+                return view('addBook', ['errorMsg' => 'Ha habido un fallo añadiendo el libro en la bd']);
+            }
+        } else {
+            return view('addBook');
+        }
+    }
+
+    function editBookForm()
+    {
+        $isbn = $this->request->getParams();
+        $bookData = $this->qb->select(['*'])->from('llibres')->where(['ISBN' => $isbn])->exec()->fetch();
+        $book = new Llibre($bookData[0]);
+        return view('editBook', ['book' => $book]);
+    }
+
+
+    function editBook()
+    {
+        $posts = ['ISBN', 'title', 'edition', 'author', 'imgPath', 'available'];
+        $data = $this->request->postAll($posts);
+        $res = $this->qb->updateWhere('llibres', $data, 'ISBN', $data['ISBN']);
+        if ($res) $this->redirect('/dashboard');
+    }
+
+    function removeBook()
+    {
+        $isbn = $this->request->getParams();
+        $this->qb->removeRow('llibres', 'ISBN', $isbn);
+        $this->redirect('/dashboard');
+    }
+
 
     function prestecs()
     {

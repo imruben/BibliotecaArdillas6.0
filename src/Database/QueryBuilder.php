@@ -215,6 +215,28 @@ class QueryBuilder
             return false;
         }
     }
+    function updateWhere(string $table, array $data, $field, $fieldvalue)
+    {
+        if ($data) {
+            $keys = array_keys($data);
+            $values = array_values($data);
+            $changes = "";
+            for ($i = 0; $i < count($keys); $i++) {
+                $changes .= $keys[$i] . "='" . $values[$i] . "',";
+            }
+            $changes = substr($changes, 0, -1);
+            $cond = "{$field}='{$fieldvalue}'";
+            $sql = "UPDATE {$table} SET {$changes} WHERE {$cond}";
+            print $sql;
+            $stmt = $this->query($sql);
+            $res = $stmt->execute();
+            if ($res) {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
 
     function updateOneField($field, $value, $fieldWhere, $valueWhere)
     {
@@ -236,6 +258,21 @@ class QueryBuilder
             return false;
         }
     }
+
+    function removeRow($table, $field, $fieldvalue)
+    {
+
+        $sql = "DELETE FROM {$table} WHERE {$field}='{$fieldvalue}'";
+
+        $stmt = $this->query($sql);
+        $res = $stmt->execute();
+        if ($res) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 
 

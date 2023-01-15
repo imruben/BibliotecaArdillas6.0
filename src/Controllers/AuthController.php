@@ -84,10 +84,9 @@ final class AuthController extends Controller
         ];
 
         $user = new Usuari($data);
-        // print $user->getUsername();
 
-        // persist on DB
-        print $user->persist($data);
+        // insert en BD
+        $user->persist($data);
 
         if ($user->persist($data)) {
             print_r('registrao');

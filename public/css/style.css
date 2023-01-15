@@ -227,7 +227,7 @@ header a {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-gap: 10px;
-  grid-auto-rows: minmax(100px, 400px);
+  grid-auto-rows: minmax(100px, auto);
 }
 
 .idisbnform {
@@ -273,6 +273,19 @@ header a {
 
 .book_unavailable {
   background-color: rgb(216, 18, 18, 0.3) !important;
+}
+
+/* .book_card_information {
+  max-height: 267px;
+}
+.book-card__title {
+} */
+
+.book-card__title,
+.book-card__author,
+.book-card__isbn,
+.book-card__description {
+  overflow: hidden;
 }
 
 .book-card {
@@ -405,5 +418,15 @@ header a {
 .reserves_body {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+/* RESERVES ADMIN */
+.admin_reserves_functions {
+}
+.admin_reserves_addbook {
+  align-items: center;
+  margin-top: 20px;
+  display: flex;
   align-items: center;
 }
