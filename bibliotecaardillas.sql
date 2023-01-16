@@ -53,8 +53,12 @@ CREATE TABLE `llibres` (
 --
 
 INSERT INTO `llibres` (`ISBN`, `title`, `edition`, `author`, `imgPath`, `available`) VALUES
+('1234566891234', 'The Nuts', 2015, 'Perico Palotes', 'aaa', b'1'),
+('1234567591234', 'More Nuts', 2010, 'Salvador Raya', 'a', b'1'),
+('1234597891234', 'A good nut', 2010, 'MiniBuyer', 'a', b'1'),
+('1236567891234', 'Lots Nuts', 1022, 'Scrat(ardilla de ice age)', 'a', b'1'),
 ('1542635894125', 'Bellota y sus amigos', 2018, 'Nil Ojeda', 'bellotaysusamigos.jpg', b'1'),
-('4645644235222', 'Las bellotas y el ser humano', 2019, 'Miguel de Cervantes', 'lasbellotasyelserhumano.jpg', b'1');
+('4645644235222', 'Las bellotas y el ser humano', 2019, 'Ayuso', 'lasbellotasyelserhumano.jpg', b'1');
 
 -- --------------------------------------------------------
 
