@@ -9,7 +9,7 @@ require 'partials/navdashboardAdmin.view.php';
         <div class="loginmodal">
             <form class="formlogin" action="/dashboard/editBook/<?php print $book->getISBN() ?>" method='POST'>
                 <label for="ISBN">ISBN</label>
-                <input maxlength="13" minlength="13" type="text" name="ISBN" placeholder="1542635894125" value="<?php print $book->getISBN() ?>" required>
+                <input maxlength="13" minlength="13" type="text" name="ISBN" placeholder="1542635894125" value="<?php print $book->getISBN() ?>" disabled>
                 <label for="title">Título</label>
                 <input type="text" name="title" placeholder="Bellota y sus amigos" value="<?php print $book->getTitle(); ?>" required>
                 <label for="edition">Edición</label>

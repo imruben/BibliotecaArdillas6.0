@@ -75,7 +75,7 @@ class Llibre extends Model
   {
     $bookClass = $this->available ? 'available' : 'unavailable';
 
-    $srcImg = "\public\img\bookcovers\\{$this->imgPath}";
+    $srcImg = "\public\img\bookcovers\\{$this->title}.jpg";
     $html = '<div class="book-card book_' . $bookClass . '">
         <div class="book-card__cover">
           <div class="book-card__book">
@@ -115,8 +115,8 @@ class Llibre extends Model
   public function renderBookAdmin(): string
   {
     $bookClass = $this->available ? 'available' : 'unavailable';
-
-    $srcImg = "\public\img\bookcovers\\{$this->imgPath}";
+    $titleimg = str_replace(' ', '', $this->title);
+    $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
     $html = '<div class="book-card book_' . $bookClass . '">
         <div class="book-card__cover">
           <div class="book-card__book">

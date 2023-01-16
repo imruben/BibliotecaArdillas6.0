@@ -119,7 +119,7 @@ final class DashboardController extends Controller
     function editBook()
     {
         $isbn = $this->request->getParams();
-        $posts = ['ISBN', 'title', 'edition', 'author', 'imgPath', 'available'];
+        $posts = ['title', 'edition', 'author', 'imgPath', 'available'];
         $data = $this->request->postAll($posts);
         $res = $this->qb->updateWhere('llibres', $data, 'ISBN', $isbn);
         if ($res) $this->redirect('/dashboard');
