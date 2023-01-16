@@ -430,3 +430,9 @@ header a {
   display: flex;
   align-items: center;
 }
+
+/* USERS ADMIN */
+.users_table {
+  min-width: 400px;
+  max-width: 100px;
+}

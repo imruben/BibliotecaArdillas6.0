@@ -7,7 +7,7 @@ require 'partials/navdashboardAdmin.view.php';
 <body>
     <div class="admin_addbook_form">
         <div class="loginmodal">
-            <form class="formlogin" action="/dashboard/editBook" method='POST'>
+            <form class="formlogin" action="/dashboard/editBook/<?php print $book->getISBN() ?>" method='POST'>
                 <label for="ISBN">ISBN</label>
                 <input maxlength="13" minlength="13" type="text" name="ISBN" placeholder="1542635894125" value="<?php print $book->getISBN() ?>" required>
                 <label for="title">Título</label>

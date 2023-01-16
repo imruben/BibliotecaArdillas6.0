@@ -51,6 +51,13 @@ class Usuari extends Model
     {
         return $this->password;
     }
+
+    public function getDecodedPassword()
+    {
+
+        return substr($this->password, 0, 7) . '...';
+    }
+
     public function getPhone()
     {
         return $this->phone;
@@ -58,6 +65,27 @@ class Usuari extends Model
     public function getidRol()
     {
         return $this->idRol;
+    }
+
+    public  function renderUsersTable()
+    {
+        // $srcImg = "\public\img\bookcovers\\{$this->book->getImgPath()}";
+        $html = ' 
+            <tr>
+                <td>' . $this->getUserId() . '</td>
+                <td>' . $this->getUsername() . '</td>
+                <td>' . $this->getEmail() . '</td>
+                <td>' .
+            $this->getPhone() .
+            '</td>
+                <td>' . $this->getDecodedPassword() . '</td>
+                <td>
+                <a href="/dashboard/removeUser/' . $this->getUserId() . '""><i class="material-icons">delete</i></a>
+        <a href="/dashboard/editUserForm/' . $this->getUserId() . '""><i class="material-icons">edit</i></a>
+                </td>
+            </tr>';
+
+        return $html;
     }
 
 

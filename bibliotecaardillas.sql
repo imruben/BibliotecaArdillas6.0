@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 10, 2023 at 05:07 PM
+-- Generation Time: Jan 16, 2023 at 04:22 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -40,34 +40,46 @@ CREATE TABLE `autores` (
 --
 
 CREATE TABLE `llibres` (
-  `ISBN` int(13) NOT NULL,
+  `ISBN` varchar(13) NOT NULL,
   `title` varchar(105) DEFAULT NULL,
-  `edition` date DEFAULT NULL,
-  `idAuthor` int(11) NOT NULL,
-  `imgPath` varchar(50) NOT NULL
+  `edition` int(4) DEFAULT NULL,
+  `author` varchar(50) NOT NULL,
+  `imgPath` varchar(50) NOT NULL,
+  `available` bit(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `llibres`
 --
 
-INSERT INTO `llibres` (`ISBN`, `title`, `edition`, `idAuthor`, `imgPath`) VALUES
-(545646, 'Bellota y sus amigos', '0000-00-00', 2, 'bellotaysusamigos.jpg'),
-(2147483647, 'Las bellotas y el ser humano', '0000-00-00', 1, 'lasbellotasyelserhumano.jpg');
+INSERT INTO `llibres` (`ISBN`, `title`, `edition`, `author`, `imgPath`, `available`) VALUES
+('1542635894125', 'Bellota y sus amigos', 2018, 'Nil Ojeda', 'bellotaysusamigos.jpg', b'1'),
+('4645644235222', 'Las bellotas y el ser humano', 2019, 'Miguel de Cervantes', 'lasbellotasyelserhumano.jpg', b'1');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prestamos`
+-- Table structure for table `prestecs`
 --
 
-CREATE TABLE `prestamos` (
-  `idUsuario` int(11) NOT NULL,
-  `ISBN` int(11) NOT NULL,
-  `fecha_prestamo` datetime DEFAULT NULL,
-  `id_prestamo` varchar(45) NOT NULL,
-  `dias_sancion` int(11) DEFAULT NULL
+CREATE TABLE `prestecs` (
+  `idUser` int(11) NOT NULL,
+  `ISBN` varchar(13) NOT NULL,
+  `reserve_date` datetime DEFAULT NULL,
+  `idReserve` int(11) NOT NULL,
+  `days_penalty` int(11) DEFAULT NULL,
+  `return_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `prestecs`
+--
+
+INSERT INTO `prestecs` (`idUser`, `ISBN`, `reserve_date`, `idReserve`, `days_penalty`, `return_date`) VALUES
+(564665, '2147483647568', '2023-01-15 00:00:00', 18, 0, '2023-01-15'),
+(564665, '2147483647568', '2023-01-15 00:00:00', 19, 0, '2023-01-15'),
+(564665, '1542635894125', '2023-01-15 00:00:00', 20, 0, '2023-01-15'),
+(564665, '1542635894125', '2023-01-16 00:00:00', 21, 0, '2023-01-16');
 
 -- --------------------------------------------------------
 
@@ -87,7 +99,7 @@ CREATE TABLE `roles` (
 --
 
 CREATE TABLE `usuaris` (
-  `idUsuari` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
   `username` varchar(155) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `phone` int(9) DEFAULT NULL,
@@ -99,11 +111,10 @@ CREATE TABLE `usuaris` (
 -- Dumping data for table `usuaris`
 --
 
-INSERT INTO `usuaris` (`idUsuari`, `username`, `email`, `phone`, `password`, `idRol`) VALUES
-(564656, 'pepe', 'pepe@gmail.com', 666555444, '$2y$04$10yrC.OsYRnc/OmoTrMn7.kKQ3XYhW42t2N.UQfXuuHocf01crG0e', 2),
-(564657, 'pepe', 'pepe@gmail.com', 666555444, '$2y$04$Vt2XWZRJKDfnCImsAXBl4OU5k1N9MReU0gx9O.Kh7zQKp.iXgLIJa', 2),
-(564658, 'pepe', 'pepe@gmail.com', 666555444, '$2y$04$8dcOGpRRE2zebYWYIH6UsuFhtUyLiTBZksIw5goI9AQsaP4DE6uby', 2),
-(564659, 'ant', 'antonio@m.com', 3232, '$2y$04$kntiRoJjZhcQMQCZUHp7deQ/wCF8NEcoGmcZreRSUdTlTMnl7Fp8q', 2);
+INSERT INTO `usuaris` (`idUser`, `username`, `email`, `phone`, `password`, `idRol`) VALUES
+(564662, 'alvin', 'alvin@gmail.com', 111222333, '$2y$04$FMBVZOe1sBxQuSp7gYH51.GU4tyYN3mwdItyS09zkFOfyY8ya8M8W', 1),
+(564665, 'pepe', 'pepe@gmail.com', 445558882, '$2y$04$bkag9O7vv6tpRuPSBO58cOE4UCCnWpvAKhalL41yg9.7RCv33IIHm', 2),
+(564666, 'admin', 'admin@gmail.com', 111222333, '$2y$04$3mZeYD3hlKXnrQMb5qYOMexryOZdOPLoFEe9HDGoLZP2KLNBxd3eO', 3);
 
 --
 -- Indexes for dumped tables
@@ -122,16 +133,16 @@ ALTER TABLE `llibres`
   ADD PRIMARY KEY (`ISBN`);
 
 --
--- Indexes for table `prestamos`
+-- Indexes for table `prestecs`
 --
-ALTER TABLE `prestamos`
-  ADD PRIMARY KEY (`id_prestamo`);
+ALTER TABLE `prestecs`
+  ADD PRIMARY KEY (`idReserve`);
 
 --
 -- Indexes for table `usuaris`
 --
 ALTER TABLE `usuaris`
-  ADD PRIMARY KEY (`idUsuari`);
+  ADD PRIMARY KEY (`idUser`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -144,10 +155,16 @@ ALTER TABLE `autores`
   MODIFY `idAutor` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `prestecs`
+--
+ALTER TABLE `prestecs`
+  MODIFY `idReserve` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
 -- AUTO_INCREMENT for table `usuaris`
 --
 ALTER TABLE `usuaris`
-  MODIFY `idUsuari` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564660;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564668;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
