@@ -9,6 +9,7 @@ class Llibre extends Model
   private string $title;
   private int $edition;
   // private string $idAuthor;
+
   private bool $available;
 
   public function __construct(array $data = [])
@@ -63,6 +64,11 @@ class Llibre extends Model
   {
     $this->available = 0;
     $this->qb->updateOneField('available', 0, 'isbn', $this->isbn);
+  }
+  public function setAvailable()
+  {
+    $this->available = 1;
+    $this->qb->updateOneField('available', 1, 'isbn', $this->isbn);
   }
 
   public function renderBook(): string
@@ -144,10 +150,50 @@ class Llibre extends Model
     } else {
       $html .= '<br><p> No Disponible 🔴<p><br>';
     }
-    $html .= '<div class="admin_reserves_functions">
+    $html .= '<div class="admin_books_functions">
         <a href="/dashboard/removeBook/' . $this->isbn . '""><i class="material-icons">delete</i></a>
         <a href="/dashboard/editBookForm/' . $this->isbn . '""><i class="material-icons">edit</i></a>
         </div>';
+    $html .= '<br></div></div>';
+    return $html;
+  }
+  public function renderBookWorker(): string
+  {
+    $bookClass = $this->available ? 'available' : 'unavailable';
+    $titleimg = str_replace(' ', '', $this->title);
+    $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
+    $html = '<div class="book-card book_' . $bookClass . '">
+        <div class="book-card__cover">
+          <div class="book-card__book">
+            <div class="book-card__book-front">
+              <img class="book-card__img" src="' . $srcImg . '" />
+            </div>
+            <div class="book-card__book-back"></div>
+            <div class="book-card__book-side"></div>
+          </div>
+        </div>
+        <div class="book_card_information">
+          <div class="book-card__title">
+            ' . $this->title . '
+          </div>
+          <div class="book-card__author">
+          ' . $this->author . '
+          </div>
+          <div class="book-card__isbn">
+          ' . $this->isbn . '
+          </div>
+          <div class="book-card__edition">
+          ' . $this->edition . '
+          </div>
+          <div class="book-card__description">
+          Lorem Ipsum has been the industrys standard dummy text ever since the 1500s</div>
+          ';
+
+    if ($this->available) {
+      $html .= '<br><p>Disponible 🟢<p><br>';
+    } else {
+      $html .= '<br><p> No Disponible 🔴<p><br>';
+    }
     $html .= '<br></div></div>';
     return $html;
   }

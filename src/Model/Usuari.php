@@ -87,6 +87,26 @@ class Usuari extends Model
         return $html;
     }
 
+    public  function renderUsersTableWorker()
+    {
+        $userimg = str_replace(' ', '', $this->getUsername());
+        $srcImg = "\public\img\users\\{$userimg}.jpg";
+        $html = '';
+        if ($this->idRol == 1) {
+            $html = ' 
+            <tr>
+                <td><img class="user_img" src="' . $srcImg . '" /></td>
+                <td>' . $this->getUsername() . '</td>
+                <td>' . $this->getEmail() . '</td>
+                <td>' .
+                $this->getPhone() .
+                '</td>
+                <td>' . $this->getDecodedPassword() . '</td>
+            </tr>';
+        }
+        return $html;
+    }
+
 
     // public function prestecs()
     // {

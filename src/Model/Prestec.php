@@ -23,6 +23,7 @@ class Prestec extends Model
     {
         parent::__construct();
         $this->book = $book;
+        $this->user = $user;
         $this->idUser = $user->getUserId();
         $this->isbn = $book->getISBN();
         // $this->idReserve = $data['idReserve'];
@@ -30,6 +31,29 @@ class Prestec extends Model
         $this->returnDate = $returnDate;
         // $this->days_penalty = 0;
         // $this->actualDate = new DateTime();
+    }
+
+    public function getIdUser()
+    {
+        return $this->user->getUserId();
+    }
+    public function getUsername()
+    {
+        return $this->user->getUsername();
+    }
+
+
+    public function getISBN()
+    {
+        return $this->book->getISBN();
+    }
+    public function getReserveDate()
+    {
+        return $this->reserveDate;
+    }
+    public function getReturnDate()
+    {
+        return $this->returnDate;
     }
 
 
@@ -60,9 +84,6 @@ class Prestec extends Model
     public  function renderReserveTable()
     {
         $penaltyClass = $this->getPenalty() ? 'reserve_penalty' : '';
-
-
-
         $titleimg = str_replace(' ', '', $this->book->getTitle());
         $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
         $html = ' 
@@ -73,10 +94,35 @@ class Prestec extends Model
                 <td>' . $this->book->getAuthor() . '</td>
                 <td>' .
             $this->book->getEdition() . '</td>
-                <td>' . $this->returnDate->format('d-m-Y') . '</td>';
+                <td>' . $this->returnDate->format('d-m-Y') . '</td><td>';
         if ($this->getPenalty()) $html .=
-            '<td><div class ="reserves_penalty_td"><i class="material-icons">warning</i>' .  $this->getPenalty() . '€</div></td>
-            </tr>';
+            '<div class ="reserves_penalty_td"><i class="material-icons">warning</i>' .  $this->getPenalty() . '€</div>';
+        $html .= '</td></tr>';
+
+        return $html;
+    }
+
+    public  function renderReserveTableAdmin()
+    {
+        $penaltyClass = $this->getPenalty() ? 'reserve_penalty' : '';
+
+        $titleimg = str_replace(' ', '', $this->book->getTitle());
+        $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
+        $html = ' 
+            <tr class="' . $penaltyClass . '">
+                <td>' . $this->user->getUsername() . ' (' . $this->user->getUserId() . ')</td>
+                <td> <img class="bookcover_reserves" src="' . $srcImg . '"></td>
+                <td>' . $this->book->getISBN() . '</td>
+                <td>' . $this->reserveDate->format('d-m-Y')  . '</td>
+                <td>' . $this->returnDate->format('d-m-Y') . '</td><td>';
+        if ($this->getPenalty()) {
+            $html .=
+                '<div class ="reserves_penalty_td"><i class="material-icons">warning</i>' .  $this->getPenalty() . '€</div>';
+        }
+        $html .= '</td><td><div class="admin_reserves_functions">
+        <a href="/dashboard/removeReserve/' . $this->isbn . '""><i class="material-icons">delete</i></a>
+        <a href="/dashboard/editReserveForm/' . $this->isbn . '""><i class="material-icons">edit</i></a>
+        </div><td></tr>';
 
         return $html;
     }

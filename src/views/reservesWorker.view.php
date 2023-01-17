@@ -1,6 +1,6 @@
 <?php
 require 'partials/header.view.php';
-require 'partials/navdashboardAdmin.view.php';
+require 'partials/navdashboardWorker.view.php';
 ?>
 
 <body>

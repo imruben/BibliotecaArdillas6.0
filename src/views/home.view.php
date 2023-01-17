@@ -20,8 +20,8 @@ require 'partials/navhome.view.php';
   <!-- modal para login -->
   <div class="loginmodal hidden">
     <form class="formlogin animate" action="/auth/signin" method='POST'>
-      <label for="email">Email</label>
-      <input type="email" name="email" placeholder="youremail@gmail.com" required><br><br>
+      <label for="email">Email o Username</label>
+      <input type="text" name="email" placeholder="youremail@gmail.com" required><br><br>
       <label for="password">Contraseña</label>
       <input type="password" name="password" placeholder="********" required>
       <p>Recordarme en este equipo</p>
@@ -40,7 +40,7 @@ require 'partials/navhome.view.php';
       <label for="username">Nombre de usuario</label>
       <input type="text" name="username" placeholder="pepeViyuela" required><br><br>
       <label for="phone">Telèfon</label>
-      <input type="tel" name="phone" placeholder="666555444" pattern = "[0-9]{9}" required><br><br>
+      <input type="tel" name="phone" placeholder="666555444" pattern="[0-9]{9}" required><br><br>
       <label for="password">Contraseña</label>
       <input type="password" name="password" placeholder="1234" required>
       <button type="submit" class="formloginbutton">Registrarse</button>

@@ -46,10 +46,10 @@ final class DashboardController extends Controller
         $rolUser = $this->userActual->getidRol();
         // 1==socio
         if ($rolUser == 1) {
-            return view('dashboard', ['user' => $this->userActual, 'books' => $books]);
+            return view('dashboard', ['user' => $this->userActual, 'users' => $this->users, 'books' => $books]);
             // 2==trabajador
         } else if ($rolUser == 2) {
-            return view('dashboard', ['user' => $this->userActual, 'users' => $this->users, 'books' => $books]);
+            return view('dashboardWorker', ['user' => $this->userActual, 'books' => $books]);
             // 3==admin
         } else if ($rolUser == 3) {
             return view('dashboardAdmin', ['user' => $this->userActual, 'books' => $books]);
@@ -88,8 +88,37 @@ final class DashboardController extends Controller
         return view('reserves', ['user' => $this->userActual, 'reserves' => $reserves]);
     }
 
+
     function reservesAdmin()
     {
+        $reservesData = $this->qb->select(['*'])->from('prestecs')->exec()->fetch();
+
+        if (!$reservesData) return view('reservesAdmin', ['user' => $this->userActual, 'reserves' => []]);
+
+        foreach ($reservesData as $r) {
+            $bookReserved = new LLibre($this->qb->select(['*'])->from('llibres')->where(['isbn' => $r['ISBN']])->limit(1)->exec()->fetch()[0]);
+
+            $userReserve = new Usuari($this->qb->select(['*'])->from('usuaris')->where(['idUser' => $r['idUser']])->limit(1)->exec()->fetch()[0]);
+
+            $reserves[] = new Prestec($userReserve, $bookReserved, new DateTime($r['reserve_date']), new DateTime($r['return_date']));
+        }
+        return view('reservesAdmin', ['user' => $this->userActual, 'reserves' => $reserves]);
+    }
+
+    function reservesWorker()
+    {
+        $reservesData = $this->qb->select(['*'])->from('prestecs')->exec()->fetch();
+
+        if (!$reservesData) return view('reservesWorker', ['user' => $this->userActual, 'reserves' => []]);
+
+        foreach ($reservesData as $r) {
+            $bookReserved = new LLibre($this->qb->select(['*'])->from('llibres')->where(['isbn' => $r['ISBN']])->limit(1)->exec()->fetch()[0]);
+
+            $userReserve = new Usuari($this->qb->select(['*'])->from('usuaris')->where(['idUser' => $r['idUser']])->limit(1)->exec()->fetch()[0]);
+
+            $reserves[] = new Prestec($userReserve, $bookReserved, new DateTime($r['reserve_date']), new DateTime($r['return_date']));
+        }
+        return view('reservesWorker', ['user' => $this->userActual, 'reserves' => $reserves]);
     }
 
     function addBook()
@@ -132,6 +161,12 @@ final class DashboardController extends Controller
         return view('usersAdmin', ['users' => $this->users]);
     }
 
+    function usersWorker()
+    {
+        return view('usersWorker', ['users' => $this->users]);
+    }
+
+
     function editUserForm()
     {
         $userid = $this->request->getParams();
@@ -147,17 +182,26 @@ final class DashboardController extends Controller
         $posts = ['idUser', 'username', 'email', 'phone', 'oldpassword', 'password'];
 
         $userData = $this->qb->select(['password'])->from('usuaris')->where(['idUser' => $userid])->exec()->fetch();
-        print $userData[0]['password'];
+        $userPasswordHashed =  $userData[0]['password'];
 
-        var_dump($posts);
+        $dataPosts = $this->request->postAll($posts);
+        $dataPosts['password'] = password_hash($dataPosts['password'], PASSWORD_BCRYPT, ['cost' => 4]);
 
-        // $data = $this->request->postAll($posts);
-        // var_dump($data);
+        if (password_verify($dataPosts['oldpassword'], $userPasswordHashed)) {
+            unset($dataPosts['oldpassword']);
+            $res = $this->qb->updateWhere('usuaris', $dataPosts, 'idUser', $userid);
+            if ($res) $this->redirect('/dashboard');
+        } else {
+            $this->redirect('/dashboard/editUserForm/' . $userid);
+        }
+    }
 
-
-
-        // $res = $this->qb->updateWhere('usuaris', $data, 'idUser', $userid);
-        // if ($res) $this->redirect('/dashboard');
+    function removeUser()
+    {
+        $userid = $this->request->getParams();
+        $this->qb->removeRow('usuaris', 'idUser', $userid);
+        $this->qb->removeRow('prestecs', 'idUser', $userid);
+        $this->redirect('/dashboard/usersAdmin');
     }
 
     function removeBook()
@@ -165,6 +209,44 @@ final class DashboardController extends Controller
         $isbn = $this->request->getParams();
         $this->qb->removeRow('llibres', 'ISBN', $isbn);
         $this->redirect('/dashboard');
+    }
+
+    function editReserveForm()
+    {
+        $isbn = $this->request->getParams();
+        $reserveData = $this->qb->select(['*'])->from('prestecs')->where(['ISBN' => $isbn])->exec()->fetch()[0];
+
+        $book = new Llibre($this->qb->select(['*'])->from('llibres')->where(['ISBN' => $isbn])->exec()->fetch()[0]);
+        $userActual = new Usuari($this->qb->select(['*'])->from('usuaris')->where(['idUser' => $reserveData['idUser']])->exec()->fetch()[0]);
+
+        $reserve = new Prestec($userActual, $book, new DateTime($reserveData['reserve_date']), new DateTime($reserveData['return_date']));
+
+        return view('editReserve', ['reserve' => $reserve]);
+    }
+
+    function editReserve()
+    {
+        $isbn = $this->request->getParams();
+        $posts = ['idUser', 'reserve_date', 'return_date'];
+        $dataPosts = $this->request->postAll($posts);
+
+        if ($this->request->post('setavailable')) {
+            $book = new Llibre($this->qb->select(['*'])->from('llibres')->where(['ISBN' => $isbn])->exec()->fetch()[0]);
+            $book->setAvailable();
+        }
+
+        $res = $this->qb->updateWhere('prestecs', $dataPosts, 'ISBN', $isbn);
+
+        if ($res) $this->redirect('/dashboard/reservesAdmin');
+    }
+
+    function removeReserve()
+    {
+        $isbn = $this->request->getParams();
+        $book = new Llibre($this->qb->select(['*'])->from('llibres')->where(['ISBN' => $isbn])->exec()->fetch()[0]);
+        $book->setAvailable();
+        $this->qb->removeRow('prestecs', 'ISBN', $isbn);
+        $this->redirect('/dashboard/reservesAdmin');
     }
 
 

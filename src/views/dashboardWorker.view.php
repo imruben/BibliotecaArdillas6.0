@@ -1,6 +1,6 @@
 <?php
 require 'partials/header.view.php';
-require 'partials/navdashboardAdmin.view.php';
+require 'partials/navdashboardWorker.view.php';
 ?>
 
 <body>
@@ -15,7 +15,7 @@ require 'partials/navdashboardAdmin.view.php';
 
       <?php
       foreach ($books as $book) {
-        print $book->renderBookAdmin();
+        print $book->renderBookWorker();
       }
       ?>
     </div>

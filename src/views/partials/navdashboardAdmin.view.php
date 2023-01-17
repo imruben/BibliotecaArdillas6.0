@@ -12,7 +12,7 @@
     <div class="nav__links">
         <li><a id="catalogue__navlink" class="navlink button" href="/dashboard">
                 Cátalogo</a></li>
-        <li><a class="navlink derecha" href="/dashboard/usersAdmin">Socios</a></li>
+        <li><a class="navlink derecha" href="/dashboard/usersAdmin">Usuarios Aplicación</a></li>
         <li><a class="navlink derecha" href="/dashboard/reservesAdmin">Reservas</a></li>
     </div>
     <div class="caja2">
@@ -21,5 +21,4 @@
             <a href="/auth/logout">Cerrar sesion</a>
         </div>
     </div>
-
 </header>

@@ -40,7 +40,7 @@ final class AuthController extends Controller
     private function auth(string $email, string $passwd)
     {
         $user = $this->qb->select(['*'])->from('usuaris')
-            ->where(['email' => $email])->limit(1)->exec()->fetch();
+            ->where(['email' => $email])->or(['username' => $email])->limit(1)->exec()->fetch();
         // var_dump($res);
 
         //ha encontrado usuario con ese email en bd
@@ -74,7 +74,7 @@ final class AuthController extends Controller
         $passwd = $this->request->post('password');
         $phone = $this->request->post('phone');
         $password = password_hash($passwd, PASSWORD_BCRYPT, ['cost' => 4]);
-        $roles_id = '2';
+        $roles_id = '1';
         $data = [
             'email' => $email,
             'phone' => $phone,
@@ -86,9 +86,9 @@ final class AuthController extends Controller
         $user = new Usuari($data);
 
         // insert en BD
-        $user->persist($data);
+        $res = $user->persist($data);
 
-        if ($user->persist($data)) {
+        if ($res) {
             print_r('registrao');
             $this->redirect('/home');
         };
