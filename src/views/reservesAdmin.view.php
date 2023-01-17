@@ -24,7 +24,6 @@ require 'partials/navdashboard.view.php';
                 <th>Autor</th>
                 <th>Edición</th>
                 <th>Fecha Devolución</th>
-                <th>Recargo</th>
             </tr>
         </thead>
         <tbody>';

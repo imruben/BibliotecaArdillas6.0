@@ -69,7 +69,6 @@ class Usuari extends Model
 
     public  function renderUsersTable()
     {
-        // $srcImg = "\public\img\bookcovers\\{$this->book->getImgPath()}";
         $html = ' 
             <tr>
                 <td>' . $this->getUserId() . '</td>

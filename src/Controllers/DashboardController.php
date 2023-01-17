@@ -10,6 +10,7 @@ use App\Model;
 use App\Model\Llibre;
 use App\Model\Prestec;
 use App\Model\Usuari;
+use DateTime;
 
 final class DashboardController extends Controller
 {
@@ -58,6 +59,8 @@ final class DashboardController extends Controller
     function reserveBook()
     {
         $actualDate = new \DateTime();
+        $returnDate = new \DateTime();
+        $returnDate->modify('+30 days');
         $isbn = $this->request->getParams();
 
         $bookData = $this->qb->select(['*'])->from('llibres')->where(['isbn' => $isbn])->limit(1)->exec()->fetch();
@@ -65,14 +68,13 @@ final class DashboardController extends Controller
         $bookReserved = new Llibre($bookData[0]);
         $bookReserved->setUnavailable();
 
-        $reserve = new Prestec($this->userActual, $bookReserved, $actualDate);
+        $reserve = new Prestec($this->userActual, $bookReserved, $actualDate, $returnDate);
         $reserve->saveReserve();
         $this->redirect('/dashboard');
     }
 
     function reserves()
     {
-        $actualDate = new \DateTime();
         $userid = $this->userActual->getUserId();
         $reservesData = $this->qb->select(['*'])->from('prestecs')->where(['idUser' => $userid])->exec()->fetch();
         if (!$reservesData) return view('reserves', ['user' => $this->userActual, 'reserves' => []]);
@@ -80,7 +82,7 @@ final class DashboardController extends Controller
         foreach ($reservesData as $r) {
             $bookReserved = new LLibre($this->qb->select(['*'])->from('llibres')->where(['isbn' => $r['ISBN']])->limit(1)->exec()->fetch()[0]);
 
-            $reserves[] = new Prestec($this->userActual, $bookReserved, $actualDate);
+            $reserves[] = new Prestec($this->userActual, $bookReserved, new DateTime($r['reserve_date']), new DateTime($r['return_date']));
         }
 
         return view('reserves', ['user' => $this->userActual, 'reserves' => $reserves]);
@@ -92,7 +94,7 @@ final class DashboardController extends Controller
 
     function addBook()
     {
-        $posts = ['ISBN', 'title', 'edition', 'author', 'imgPath', 'available'];
+        $posts = ['ISBN', 'title', 'edition', 'author', 'available'];
 
         if ($this->request->postAll($posts)) {
             $data = $this->request->postAll($posts);
@@ -119,7 +121,7 @@ final class DashboardController extends Controller
     function editBook()
     {
         $isbn = $this->request->getParams();
-        $posts = ['title', 'edition', 'author', 'imgPath', 'available'];
+        $posts = ['title', 'edition', 'author',  'available'];
         $data = $this->request->postAll($posts);
         $res = $this->qb->updateWhere('llibres', $data, 'ISBN', $isbn);
         if ($res) $this->redirect('/dashboard');

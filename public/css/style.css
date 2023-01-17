@@ -377,6 +377,23 @@ header a {
 }
 
 /* RESERVES */
+.reserve_penalty {
+  background-color: rgb(240, 6, 25, 0.8) !important;
+}
+
+.reserves_penalty_td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 180%;
+}
+.reserves_penalty_td i {
+  margin-right: 5px;
+  font-size: 150%;
+  align-self: center;
+}
+
 .reserves_table {
   border-collapse: collapse;
   margin: 25px 0;

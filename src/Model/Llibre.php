@@ -9,7 +9,6 @@ class Llibre extends Model
   private string $title;
   private int $edition;
   // private string $idAuthor;
-  private string $imgPath;
   private bool $available;
 
   public function __construct(array $data = [])
@@ -19,7 +18,6 @@ class Llibre extends Model
     $this->author = $data['author'];
     $this->title = $data['title'];
     $this->edition = $data['edition'];
-    $this->imgPath = $data['imgPath'];
     $this->available = $data['available'];
   }
 
@@ -43,10 +41,6 @@ class Llibre extends Model
   public function getISBN(): string
   {
     return $this->isbn;
-  }
-  public function getImgPath(): string
-  {
-    return $this->imgPath;
   }
   public function getTitle(): string
   {
@@ -75,7 +69,8 @@ class Llibre extends Model
   {
     $bookClass = $this->available ? 'available' : 'unavailable';
 
-    $srcImg = "\public\img\bookcovers\\{$this->title}.jpg";
+    $titleimg = str_replace(' ', '', $this->title);
+    $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
     $html = '<div class="book-card book_' . $bookClass . '">
         <div class="book-card__cover">
           <div class="book-card__book">

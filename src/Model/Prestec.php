@@ -16,10 +16,10 @@ class Prestec extends Model
     protected DateTime $reserveDate;
     protected string $isbn;
     protected DateTime $returnDate;
-    protected int $days_penalty;
+    // protected int $days_penalty;
+    protected DateTime $actualDate;
 
-
-    public function __construct(Usuari $user, Llibre $book, DateTime $reserveDate)
+    public function __construct(Usuari $user, Llibre $book, DateTime $reserveDate, DateTime $returnDate)
     {
         parent::__construct();
         $this->book = $book;
@@ -27,8 +27,11 @@ class Prestec extends Model
         $this->isbn = $book->getISBN();
         // $this->idReserve = $data['idReserve'];
         $this->reserveDate = $reserveDate;
-        $this->days_penalty = 0;
+        $this->returnDate = $returnDate;
+        // $this->days_penalty = 0;
+        // $this->actualDate = new DateTime();
     }
+
 
     public function saveReserve(): void
     {
@@ -36,25 +39,43 @@ class Prestec extends Model
             'idUser' => $this->idUser,
             'ISBN' => $this->isbn,
             'reserve_date' => $this->reserveDate->format('Ymd'),
-            'days_penalty' => $this->days_penalty,
-            'return_date' => $this->reserveDate->format('Ymd')
+            'return_date' => $this->returnDate->format('Ymd')
         ];
 
         $this->qb->insert($reserveData)->exec();
     }
 
+    public function getPenalty()
+    {
+        $moneyPenalty = 0.50;
+
+        $diffDays = $this->returnDate->diff($this->reserveDate)->format("%r%a");
+        if ($diffDays > 0) {
+            return $diffDays * $moneyPenalty;
+        } else {
+            return 0;
+        };
+    }
+
     public  function renderReserveTable()
     {
-        $srcImg = "\public\img\bookcovers\\{$this->book->getImgPath()}";
+        $penaltyClass = $this->getPenalty() ? 'reserve_penalty' : '';
+
+
+
+        $titleimg = str_replace(' ', '', $this->book->getTitle());
+        $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
         $html = ' 
-            <tr>
+            <tr class="' . $penaltyClass . '">
                 <td> <img class="bookcover_reserves" src="' . $srcImg . '"></td>
                 <td>' . $this->book->getISBN() . '</td>
                 <td>' . $this->book->getTitle() . '</td>
                 <td>' . $this->book->getAuthor() . '</td>
                 <td>' .
             $this->book->getEdition() . '</td>
-                <td>' . $this->reserveDate->format('d-m-Y') . '</td>
+                <td>' . $this->returnDate->format('d-m-Y') . '</td>';
+        if ($this->getPenalty()) $html .=
+            '<td><div class ="reserves_penalty_td"><i class="material-icons">warning</i>' .  $this->getPenalty() . '€</div></td>
             </tr>';
 
         return $html;

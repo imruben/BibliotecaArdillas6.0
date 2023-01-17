@@ -13,7 +13,6 @@
         <li><a id="catalogue__navlink" class="navlink button" href="/dashboard">
                 Cátalogo</a></li>
         <li><a class="navlink derecha" href="/dashboard/reserves">Mis reservas</a></li>
-        <li><a class="navlink derecha" href="#">Historial</a></li>
     </div>
     <div class="caja2">
         <div class="closesession">
