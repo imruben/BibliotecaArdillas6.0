@@ -6,16 +6,26 @@ require 'partials/navhome.view.php';
 <body>
 
   <div class="header">
-    <img src="..\..\public\img\logo.png" class="logoHome">
-    <h1>Biblioteca de ardillas</h1>
+    <img src="/public\img\logo.png" class="logoHome">
+    <h1 id="tituloHome">Alvin y sus amigos</h1>
   </div>
   <div id="modalError">
     <?php if (isset($loginError)) print $loginError ?>
   </div>
 
-  <div class="ardillanuts">
-    <img src="..\..\public\img\ardilla1.jpeg" class="imgArdilla1">
+  <video id="arenita" autoplay muted loop id="myVideo">
+    <source src="/public/img/arenita.mp4" type="video/mp4">
+  </video>
+
+  <div id="arvin_borrachos">
+    <img src="/public/img/alvin1.png" alt="">
+    <img src="/public/img/alvin2.png" alt="">
+    <img src="/public/img/alvin3.png" alt="">
   </div>
+  <!-- <div class="ardillanuts">
+
+    <img src="/public/img/ardilla1.jpeg" class="imgArdilla1">
+  </div> -->
 
   <!-- modal para login -->
   <div class="loginmodal hidden">

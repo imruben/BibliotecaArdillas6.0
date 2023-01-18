@@ -15,13 +15,13 @@ require 'partials/navdashboardAdmin.view.php';
                     <th>Username</th>
                     <th>Email</th>
                     <th>Teléfono</th>
-                    <th>Contraseña</th>
+                    <th>Rol</th>
                     <th>Modificar</th>
                 </tr>
             </thead>
             <tbody>';
     foreach ($users as $u) {
-        print $u->renderUsersTable();
+        print $u->renderUsersTableAdmin();
     }
     print '</tbody>
         </table>

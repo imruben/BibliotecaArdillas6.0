@@ -1,11 +1,12 @@
 :root {
-  --ardilla: beige;
-  --Background: #ffffff;
+  --ardilla: rgb(240, 240, 179);
+  --Background: #1a1a1a;
   --navDashboard: #212121;
   --navFont: #fff;
   --fondoLibro: #ffff;
-  --colorPrincipal: black;
-  --colorSecundario: #ff5d6a;
+  --colorPrincipal: white;
+  /* --colorSecundario: #ff5d6a; */
+  --colorSecundario: #735f32;
   -error: #b00020;
 }
 
@@ -25,6 +26,27 @@ body {
   background-color: var(--Background);
   height: 100%;
   color: var(--colorPrincipal);
+  /* background-image: url("/public/img/background.jpg"); */
+  /* background-clip: url("/public/img/arenita.mp4"); */
+  /* background-size: cover; */
+}
+
+#arenita {
+  z-index: -1;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+#tituloHome {
+  /* border: 2px solid black; */
+  text-shadow: 3px 3px red, -1em 0 0.4em olive;
+  color: orange;
+}
+.logoHome {
+  /* background-color: #009879; */
+  /* box-shadow: 3px 3px red, -1em 0 0.4em olive; */
 }
 
 a {
@@ -55,10 +77,24 @@ button {
   /* background-color: var(--ardilla); */
 }
 button:hover {
+  color: white;
+  background-color: var(--colorSecundario);
+}
+
+.botonReservar:hover {
+  color: white;
   background-color: var(--colorSecundario);
 }
 
 /* SERGI HOME */
+#arvin_borrachos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#arvin_borrachos img {
+  width: 200px;
+}
 
 .logoHome {
   border-radius: 50%;
@@ -93,6 +129,7 @@ button:hover {
   z-index: 10;
 }
 .formlogin {
+  color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -224,9 +261,9 @@ header a {
 .libros {
   display: grid;
   grid-gap: 5px;
-  row-gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-template-rows: minmax(380px, 1fr);
+  row-gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-rows: minmax(300px, 1fr);
   font-size: 14px;
 }
 
@@ -267,13 +304,13 @@ header a {
 
 /* pijada libro */
 
-.book_available {
+/* .book_available {
   background-color: rgba(50, 158, 28, 0.3) !important;
 }
 
 .book_unavailable {
   background-color: rgb(216, 18, 18, 0.3) !important;
-}
+} */
 
 /* .book_card_information {
   max-height: 267px;
@@ -282,9 +319,10 @@ header a {
 } */
 
 .book-card__title {
-  /* font-size: 2vw !important; */
-
-  height: 50px;
+  font-family: "Goudy Bookletter 1911", serif !important;
+  font-size: 26px !important;
+  text-align: center;
+  height: 65px;
 }
 .book-card__title,
 .book-card__author,
@@ -301,12 +339,16 @@ header a {
 }
 
 .book-card {
-  min-height: 420px;
-  width: 200px;
+  min-height: 250px;
+  width: 230px;
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgb(180, 174, 174), 0 3px 6px rgba(0, 0, 0, 0.23);
+  color: black !important;
+}
+.book-card-user {
+  min-height: 350px !important;
 }
 .book-card .book-card__cover {
   position: relative;
@@ -391,7 +433,7 @@ header a {
 
 /* RESERVES */
 .reserve_penalty {
-  background-color: rgb(240, 6, 25, 0.8) !important;
+  background-color: rgba(199, 18, 34, 0.8) !important;
 }
 
 .reserves_penalty_td {
@@ -409,16 +451,18 @@ header a {
 
 .reserves_table {
   border-collapse: collapse;
+  border: 1px solid white;
+  border-radius: 1em;
   margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 700px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-  border-radius: 5px;
 }
+
 .reserves_table thead tr {
   background-color: var(--colorSecundario);
-  color: #ffffff;
+  color: white;
   text-align: left;
 }
 .reserves_table th,
@@ -429,10 +473,6 @@ header a {
 
 .reserves_table tbody tr {
   border-bottom: 1px solid #dddddd;
-}
-
-.reserves_table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
 }
 
 .reserves_table tbody tr:last-of-type {

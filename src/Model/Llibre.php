@@ -77,7 +77,7 @@ class Llibre extends Model
 
     $titleimg = str_replace(' ', '', $this->title);
     $srcImg = "\public\img\bookcovers\\{$titleimg}.jpg";
-    $html = '<div class="book-card book_' . $bookClass . '">
+    $html = '<div class="book-card book-card-user book_' . $bookClass . '">
         <div class="book-card__cover">
           <div class="book-card__book">
             <div class="book-card__book-front">
@@ -100,15 +100,18 @@ class Llibre extends Model
           <div class="book-card__isbn">
           ' . $this->isbn . '
           </div>
-          <div class="book-card__description">
-          Lorem Ipsum has been the industrys standard dummy text ever since the 1500s</div>
           ';
 
     if ($this->available) {
       $html .= '<br><a class="botonReservar" href="/dashboard/reserveBook/' . $this->isbn . '">Reservar</a>';
+    } else {
+      $html .= '<br><p> No Disponible 🔴<p><br>';
     }
 
-    $html .= '<br></div></div>';
+    if ($this->available) {
+    }
+
+    $html .= '</div></div>';
     return $html;
   }
 
@@ -141,8 +144,6 @@ class Llibre extends Model
           <div class="book-card__edition">
           ' . $this->edition . '
           </div>
-          <div class="book-card__description">
-          Lorem Ipsum has been the industrys standard dummy text ever since the 1500s</div>
           ';
 
     if ($this->available) {
@@ -154,7 +155,7 @@ class Llibre extends Model
         <a href="/dashboard/removeBook/' . $this->isbn . '""><i class="material-icons">delete</i></a>
         <a href="/dashboard/editBookForm/' . $this->isbn . '""><i class="material-icons">edit</i></a>
         </div>';
-    $html .= '<br></div></div>';
+    $html .= '</div></div>';
     return $html;
   }
   public function renderBookWorker(): string
@@ -185,8 +186,6 @@ class Llibre extends Model
           <div class="book-card__edition">
           ' . $this->edition . '
           </div>
-          <div class="book-card__description">
-          Lorem Ipsum has been the industrys standard dummy text ever since the 1500s</div>
           ';
 
     if ($this->available) {
@@ -194,7 +193,7 @@ class Llibre extends Model
     } else {
       $html .= '<br><p> No Disponible 🔴<p><br>';
     }
-    $html .= '<br></div></div>';
+    $html .= '</div></div>';
     return $html;
   }
 }

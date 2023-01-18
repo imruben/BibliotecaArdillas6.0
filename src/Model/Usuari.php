@@ -62,12 +62,29 @@ class Usuari extends Model
     {
         return $this->phone;
     }
-    public function getidRol()
+
+    public function getIdRol()
     {
         return $this->idRol;
     }
 
-    public  function renderUsersTable()
+    public function getUserRol()
+    {
+        $rol = '';
+        // $idRol = $this->qb->select(['idRol'])->from('usuaris')->where(['idUser' => $this->getUserId()])->exec()->fetch()[0]['idRol'];
+        $idRol = $this->idRol;
+        if ($idRol == 1) {
+            $rol = 'Socio';
+        } else if ($idRol == 2) {
+            $rol = 'Trabajador';
+        } else if ($idRol == 3) {
+            $rol = 'Admin';
+        }
+        return $rol;
+    }
+
+
+    public  function renderUsersTableAdmin()
     {
         $html = ' 
             <tr>
@@ -77,7 +94,7 @@ class Usuari extends Model
                 <td>' .
             $this->getPhone() .
             '</td>
-                <td>' . $this->getDecodedPassword() . '</td>
+                <td>' . $this->getUserRol() . '</td>
                 <td>
                 <a href="/dashboard/removeUser/' . $this->getUserId() . '""><i class="material-icons">delete</i></a>
         <a href="/dashboard/editUserForm/' . $this->getUserId() . '""><i class="material-icons">edit</i></a>
@@ -101,7 +118,6 @@ class Usuari extends Model
                 <td>' .
                 $this->getPhone() .
                 '</td>
-                <td>' . $this->getDecodedPassword() . '</td>
             </tr>';
         }
         return $html;

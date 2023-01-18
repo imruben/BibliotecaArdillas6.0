@@ -15,7 +15,6 @@ require 'partials/navdashboardWorker.view.php';
                     <th>Username</th>
                     <th>Email</th>
                     <th>Teléfono</th>
-                    <th>Contraseña</th>
                 </tr>
             </thead>
             <tbody>';

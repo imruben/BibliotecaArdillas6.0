@@ -30,7 +30,7 @@ class Prestec extends Model
         $this->reserveDate = $reserveDate;
         $this->returnDate = $returnDate;
         // $this->days_penalty = 0;
-        // $this->actualDate = new DateTime();
+        $this->actualDate = new DateTime();
     }
 
     public function getIdUser()
@@ -73,7 +73,7 @@ class Prestec extends Model
     {
         $moneyPenalty = 0.50;
 
-        $diffDays = $this->returnDate->diff($this->reserveDate)->format("%r%a");
+        $diffDays = $this->returnDate->diff($this->actualDate)->format("%r%a");
         if ($diffDays > 0) {
             return $diffDays * $moneyPenalty;
         } else {
@@ -122,7 +122,7 @@ class Prestec extends Model
         $html .= '</td><td><div class="admin_reserves_functions">
         <a href="/dashboard/removeReserve/' . $this->isbn . '""><i class="material-icons">delete</i></a>
         <a href="/dashboard/editReserveForm/' . $this->isbn . '""><i class="material-icons">edit</i></a>
-        </div><td></tr>';
+        </div></td></tr>';
 
         return $html;
     }

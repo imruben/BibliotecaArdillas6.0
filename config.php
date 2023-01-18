@@ -15,10 +15,18 @@ return [
 // C:\Users\ruben\Desktop\BibliotecaArdillas\vendor\vlucas\phpdotenv\src\Dotenv.php
 
 
+// return [
+//   'dbuser' => 'root',
+//   'dbpassword' => '',
+//   'connection' => 'mysql:host=localhost',
+//   'dbname' => 'bibliotecaardillas',
+//   'options' => [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]
+// ];
+
 return [
-  'dbuser' => 'root',
-  'dbpassword' => '',
-  'connection' => 'mysql:host=localhost',
+  'dbuser' => 'ardilla',
+  'dbpassword' => 'dIT573@fCD',
+  'connection' => 'mysql:host=82.223.196.234:3306',
   'dbname' => 'bibliotecaardillas',
   'options' => [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_WARNING]
 ];
