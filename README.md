@@ -1,4 +1,5 @@
 # Proyecto PHP SquirrelLibrary
+Library's web inspiring its style in squirrels
 
 ## What is implemented
 - Auth controllers (login and register)
